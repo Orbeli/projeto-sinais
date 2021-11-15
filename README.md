@@ -35,18 +35,6 @@ Outras distribuições
 ```
 
 ---
-## Exemplos de Uso
-Altere o nome da variavel *entrada* para analisar a imagem desejada:
-1) Analisar o copo *cheio1.png*:
-```
-    entrada = "cheio1.png"
-```
-2) Analisar o copo vazio3.jpg:
-```
-    entrada = "vazio3.jpg"
-```
-
----
 ## Links
 [GitHub](https://github.com/Orbeli/projeto-sinais) - GitHub do projeto  
 
