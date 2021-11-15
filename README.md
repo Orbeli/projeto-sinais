@@ -1,5 +1,5 @@
 # Projeto Sinais
-Projeto criado para a disciplina de Processamento de Imagens e tem como objetivo determinar se uma imagem apresenta 1 ou 3 dedos utilizando técnicas de processamento de imagens.
+Projeto criado para a disciplina de Processamento de Imagens e tem como objetivo determinar se uma imagem apresenta 1 ou 3 dedos utilizando técnicas de processamento de imagens. Atualmente o projeto tem uma taxa de acerto de 88,33%.
 
 ---
 ## Requisitos
