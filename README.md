@@ -31,7 +31,7 @@ Outras distribuições
 ```
 2) Rodar o programa com o python:
 ```
-    python3 copo.py
+    python3 dedos.py
 ```
 
 ---
