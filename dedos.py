@@ -56,7 +56,7 @@ def verifica_dedos(branco, preto):
 	branco -- pixels brancos 
 	preto -- pixels pretos
     """
-	if branco < preto-60 and branco > 130:
+	if branco < preto and branco > 130:
 		resultados.append(3)
 		return 3
 	elif branco < 110:
