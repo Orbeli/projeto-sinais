@@ -1,5 +1,5 @@
 # Projeto Sinais
-Projeto criado para a disciplina de Processamento de Imagens e tem como objetivo determinar se uma imagem apresenta 1 ou 3 dedos utilizando técnicas de processamento de imagens.
+Projeto criado para a disciplina de Processamento de Imagens e tem como objetivo determinar se uma imagem apresenta 1 ou 3 dedos utilizando técnicas de processamento de imagens. Atualmente o projeto tem uma taxa de acerto de 88,33%.
 
 ---
 ## Requisitos
@@ -31,19 +31,7 @@ Outras distribuições
 ```
 2) Rodar o programa com o python:
 ```
-    python3 copo.py
-```
-
----
-## Exemplos de Uso
-Altere o nome da variavel *entrada* para analisar a imagem desejada:
-1) Analisar o copo *cheio1.png*:
-```
-    entrada = "cheio1.png"
-```
-2) Analisar o copo vazio3.jpg:
-```
-    entrada = "vazio3.jpg"
+    python3 dedos.py
 ```
 
 ---
