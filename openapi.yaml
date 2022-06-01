@@ -1,0 +1,2032 @@
+openapi: 3.0.0
+info:
+  title: "API de Originação | Origination API"
+  description: "Documentação da API do serviço de originação de contas."
+  version: 1.0.0
+
+servers:
+  - url: https://beta-dot-origination-dot-wearatar-dev.appspot.com
+    description: Ambiente Sandbox - Versão beta
+  - url: https://beta-dot-origination-dot-wearatar.appspot.com
+    description: Ambiente Produção - Versão beta
+
+paths:
+  /entities/profiles:
+    post:
+      summary: Create a customer entity.
+      description: Criar uma entidade para o cliente. <br><br>
+        <b> EN </b> Create an entity for the customer and return a Profile with your newly created atarId.<br>
+        <b> PT </b> Cria uma entidade para o cliente e devolve uma Profile com o seu novo atarId.
+      security:
+        - basicAuth: []
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      tags:
+        - /entities/profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Profile"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/profiles/{atarId}:
+    get:
+      summary: ""
+      description: ""
+      security:
+        - basicAuth: []
+      parameters:
+        - name: atarId
+          in: path
+          required: true
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+          schema:
+            type: string
+      tags:
+        - /entities/profiles
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Profile"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+    put:
+      summary: ""
+      description: ""
+      security:
+        - basicAuth: []
+      parameters:
+        - name: atarId
+          in: path
+          required: true
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+          schema:
+            type: string
+      tags:
+        - /entities/profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Profile"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Profile"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/profiles/{atarId}/files:
+    post:
+      summary: "Upload or link preloaded file to AtarId<br>Carrega ou vincula arquivo pre-carregado ao AtarId"
+      description: "For file upload use base64. For link preloaded file use fileId<>Para carregar um arquivo use base64. Para vincular um arquivo pre-carregado use fileId"
+      security:
+        - basicAuth: []
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      - name: atarId
+        in: path
+        required: true
+        description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        schema:
+          type: string
+      tags:
+        - /entities/profiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntityFile"
+      responses:
+        "201":
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+
+  /entities/companies:
+    post:
+      summary: Create a company entity.
+      description: Criar uma entidade para a empresa.
+      security:
+        - basicAuth: []
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      tags:
+        - /entities/companies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Company"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Company"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/companies/{atarId}:
+    get:
+      summary: ""
+      description: ""
+      security:
+        - basicAuth: []
+      parameters:
+        - name: atarId
+          in: path
+          required: true
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+          schema:
+            type: string
+      tags:
+        - /entities/companies
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Company"
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+    put:
+      summary: ""
+      description: ""
+      security:
+        - basicAuth: []
+      parameters:
+        - name: atarId
+          in: path
+          required: true
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+          schema:
+            type: string
+      tags:
+        - /entities/companies
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Company"
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/companies/{atarId}/files:
+    post:
+      summary: ""
+      description: ""
+      security:
+        - basicAuth: []
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      - name: atarId
+        in: path
+        required: true
+        description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        schema:
+          type: string
+      tags:
+        - /entities/companies
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntityFile"
+      responses:
+        "201":
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+
+  /entities:
+    post:
+      summary: Create a customer entity.
+      description: Criar uma entidade para o cliente. <br><br>
+        <b> EN </b> Create an entity for the customer and return a Person with your newly created atarId.<br>
+        <b> PT </b> Cria uma entidade para o cliente e devolve uma Person com o seu novo atarId.
+      security:
+        - basicAuth: []
+      deprecated: true
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      tags:
+        - /entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Person"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Person"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+    get:
+      summary: Retrieves a list of customer simple entities.
+      description: Retrieves a list of customer simple entities. <br><br>
+                  <b> EN </b> Retrieves a list of customer simple entities.<br>
+                  <b> PT </b> Retorna uma lista de entidade simples de clientes.
+      security:
+        - basicAuth: []
+      parameters:
+        - name: document
+          in: query
+          description: 'Documento CPF/CNPJ a ser pesquisado.'
+          required: false
+          schema:
+            type: string
+      tags:
+        - /entities
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Entity"
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/{atarId}:
+    get:
+      summary: Retrieves a customer simple entity.
+      description: Retrieves a customer generic entity. <br><br>
+                   <b> EN </b> Retrieves a customer simple entity.<br>
+                   <b> PT </b> Retorna uma entidade simples do cliente.
+      security:
+        - basicAuth: []
+      tags:
+        - /entities
+      parameters:
+        - name: atarId
+          in: path
+          required: true
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+          required: true
+          schema:
+            type: string
+        - name: Atar-ApiKey
+          in: header
+          description: 'Chave de acesso a API, informado pela AtarB2B'
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Entity"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/cbos:
+    get:
+      summary: Retrieves a list of occupations.
+      description: Retrieves a list of occupations. <br><br>
+                  <b> EN </b> Retrieves a list of occupations.<br>
+                  <b> PT </b> Retorna uma lista das ocupações.
+      security:
+        - basicAuth: []
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      tags:
+        - /entities
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cbo"
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /entities/files:
+    post:
+      summary: Save a file.
+      description: Save a file. <br><br>
+        <b> EN </b> Save a file.<br>
+        <b> PT </b> Salva um arquivo.
+      security:
+        - basicAuth: [ ]
+
+      parameters:
+        - name: authorization
+          in: header
+          description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+          required: true
+          schema:
+            type: string
+        - name: Atar-ApiKey
+          in: header
+          description: 'Chave de acesso a API, informado pela AtarB2B'
+          required: true
+          schema:
+            type: string
+      tags:
+        - /entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntityPreFile"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntityFileResponse"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /subscribe/create-entity:
+    post:
+      summary: Cadastro de endpoint que recebe resposta da criação de uma profile ou de uma company.
+      description: ""
+      security:
+        - basicAuth: []
+      tags:
+        - /entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+      callbacks:
+        createEntity:
+          '{$request.body#/url}':
+            post:
+              description: <strong> EN </strong> This endpoint is used to notify when a new company or profile is created.<br><br>===========================<br>
+                <br><strong> PT </strong> Este endpoint serve para notificar quando uma nova company ou profile é criada.
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      oneOf:
+                        - $ref: "#/components/schemas/Profile"
+                        - $ref: "#/components/schemas/Company"
+              responses:
+                "200":
+                  description: <b> EN </b> Any status code in the range 200...299 will be interpreted as successful, otherwise the queue will continue to try to deliver.<br><br><b> PT </b> Qualquer status code no range 200...299 será interpretado como sucesso, caso contrário a fila continuará tentando entregar.
+
+      responses:
+        "202":
+          description: OK
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/Account"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+  
+  /subscribe/update-entity:
+    post:
+      summary: Cadastro de endpoint que recebe resposta da atualização de uma profile ou de uma company.
+      description: ""
+      security:
+        - basicAuth: []
+      tags:
+        - /entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+      callbacks:
+        updateEntity:
+          '{$request.body#/url}':
+            post:
+              description: <strong> EN </strong> This endpoint is used to notify when a company or profile is updated.<br><br>===========================<br>
+                <br><strong> PT </strong> Este endpoint serve para notificar quando uma nova company ou profile é criada.
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      oneOf:
+                        - $ref: "#/components/schemas/Profile"
+                        - $ref: "#/components/schemas/Company"
+              responses:
+                "200":
+                  description: <b> EN </b> Any status code in the range 200...299 will be interpreted as successful, otherwise the queue will continue to try to deliver.<br><br><b> PT </b> Qualquer status code no range 200...299 será interpretado como sucesso, caso contrário a fila continuará tentando entregar.
+
+      responses:
+        "202":
+          description: OK
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/Account"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /kyc/analysis:
+    post:
+      summary: Realiza a análise de KYC de forma assíncrona, retornando kycStatus como processing.
+      description: ""
+      security:
+        - basicAuth: []
+      tags:
+        - /kyc/analysis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AtarId"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KycAnalysis"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /subscribe/kyc-analysis:
+    post:
+      summary: Cadastro de endpoint que recebe resposta do evento de análise de KYC, sendo kycStatus valid ou invalid.
+      description: ""
+      security:
+        - basicAuth: []
+      tags:
+        - /kyc/analysis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+      callbacks:
+        updateKycAnalysis:
+          '{$request.body#/url}':
+            post:
+              description: <strong> EN </strong> This endpoint is used to notify when an KYC analysis changes status.<br><br>===========================<br>
+                <br><strong> PT </strong> Este endpoint serve para notificar quando uma análise de KYC muda de status.
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/KycAnalysis"
+              responses:
+                "200":
+                  description: <b> EN </b> Any status code in the range 200...299 will be interpreted as successful, otherwise the queue will continue to try to deliver.<br><br><b> PT </b> Qualquer status code no range 200...299 será interpretado como sucesso, caso contrário a fila continuará tentando entregar.
+
+      responses:
+        "202":
+          description: OK
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/Account"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+
+  /accounts:
+    post:
+      summary: Cria a PaymentAccount do usuário de forma assíncrona caso kycStatus for valid.
+      description: Cria uma conta para o cliente. <br><br>
+        <b> EN </b> Create an account for the customer and return an Account.<br>
+        <b> PT </b> Cria uma conta para o cliente e devolve uma Account.
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateAccount"
+      responses:
+        "204":
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+    get:
+      summary: Retrieves an accounts list.
+      description: Retrieves an accounts list. <br><br>
+                  <b> EN </b> Retrieves an accounts list.<br>
+                  <b> PT </b> Retorna uma lista de contas.
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Account"
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /accounts/{atarId}:
+    get:
+      summary: Retrieves an account.
+      description: Retrieves an account. <br><br>
+                   <b> EN </b> Retrieves an account.<br>
+                   <b> PT </b> Retorna uma conta.
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      parameters:
+        - name: atarId
+          in: path
+          required: true
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+          schema:
+            type: string
+        - name: authorization
+          in: header
+          description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+          required: true
+          schema:
+            type: string
+        - name: Atar-ApiKey
+          in: header
+          description: 'Chave de acesso a API, informado pela AtarB2B'
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /accounts/lock:
+    post:
+      summary: Bloqueia a conta do usuário e os dispositivos relacionados.
+      description: Bloqueia a conta do cliente. <br><br>
+        <b> EN </b> Lock an customer account and related devices.<br>
+        <b> PT </b> Bloqueia a conta do cliente e os dispositivos relacionados.
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LockAccount"
+      responses:
+        "204":
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /accounts/unlock:
+    post:
+      summary: Desbloqueia a conta do usuário e os dispositivos relacionados.
+      description: Desbloqueia a conta do cliente. <br><br>
+        <b> EN </b> Unlock an customer account and related devices.<br>
+        <b> PT </b> Desbloqueia a conta do cliente e os dispositivos relacionados.
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AtarIdIssuer"
+      responses:
+        "204":
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+  /accounts/close:
+    delete:
+      summary: Encerra a conta do usuário e os dispositivos relacionados.
+      description: Encerra a conta do cliente. <br><br>
+        <b> EN </b> Close an customer account and related devices.<br>
+        <b> PT </b> Encerra a conta do cliente e os dispositivos relacionados.
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AtarIdIssuer"
+      responses:
+        "204":
+          description: OK
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+
+  /subscribe/accounts:
+    post:
+      summary: Cadastro de endpoint que recebe resposta do evento de PaymentAccount aberta, ou de PaymentAccount bloqueada pela Atar.
+      description: ""
+      security:
+        - basicAuth: []
+      tags:
+        - /accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+      callbacks:
+        updateAccount:
+          '{$request.body#/url}':
+            post:
+              description: <strong> EN </strong> This endpoint is used to notify when an account is created.<br><br>===========================<br>
+                <br><strong> PT </strong> Este endpoint serve para notificar quando uma conta é criada.
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: "#/components/schemas/Account"
+              responses:
+                "200":
+                  description: <b> EN </b> Any status code in the range 200...299 will be interpreted as successful, otherwise the queue will continue to try to deliver.<br><br><b> PT </b> Qualquer status code no range 200...299 será interpretado como sucesso, caso contrário a fila continuará tentando entregar.
+      responses:
+        "202":
+          description: OK
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/Account"
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+        "500":
+          $ref: '#/components/responses/GenericError'
+        "504":
+          $ref: '#/components/responses/TooManyRequests'
+
+
+  /code:
+    post:
+      summary: Confirm email and phone.
+      description: Gerar um código para validar e-mail/telefone. <br><br>
+        <b> EN </b> Generate confirmation code from email or phone.<br>
+        <b> PT </b> Gerar código de confirmação de e-mail ou telefone.
+      security:
+        - basicAuth: []
+
+      parameters:
+      - name: authorization
+        in: header
+        description: 'Basic do usuario a realizar a operacao. Exemplo: Basic dXN1YXJpbzpzZW5oYQ=='
+        required: true
+        schema:
+          type: string
+      - name: Atar-ApiKey
+        in: header
+        description: 'Chave de acesso a API, informado pela AtarB2B'
+        required: true
+        schema:
+          type: string
+      tags:
+        - OTP
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CodeInsert"
+      responses:
+        204:
+          description: Codigo registrado e enviado
+          content: { }
+        400:
+          description: Dados invalidos
+          content: { }
+        401:
+          description: API key invalida
+          content: { }
+        406:
+          description: E-mail ou Telefone invalido
+          content: { }
+        
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      description: "HTTPS Basic Authentication. <br><br>
+                    Base64 encoded identifier and password.
+                    <br> Identificador e senha codificados em base64.
+                    <br> Ex: Basic MTIzNDU2Nzg5MTE6MTIzNDU2"
+      scheme: basic
+  responses:
+    BadRequest:
+      description: Bad request, probably missing required fields.<br>Requisição inválida, provavelmente faltando campos obrigatórios.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    InsufficientFunds:
+      description: No balance to perform the operation. <br> Sem saldo para executar a operação.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    Unauthorized:
+      description: Bad credentials.<br>Credenciais inválidas.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    PaymentRequired:
+      description: Not enought funds.<br>Saldo insuficiente.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    Forbidden:
+      description: Your account is closed, locked or not has permission scope.<br>Sua conta está encerrada, bloqueada ou não possui escopo de permissão.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    NotFound:
+      description: The specified resource was not found.<br>O recurso especificado não foi encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    Conflict:
+      description: An attempt was made to create an object that already exists.<br>Uma tentativa foi feita de criar um objeto que já existe.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    PreconditionFailed:
+      description: An attempt was made to create an object that not attend some preconditions.<br>Uma tentativa foi feita de criar um objeto que não atende algumas pré-condições.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    GenericError:
+      description: Generic internal server error.<br>Erro interno genérico do servidor.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+    TooManyRequests:
+      description: Too many requests per second or IP not in firewall whitelist.<br>Muitas requisições feitas por segundo ou IP não está na whitelist do firewall.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AtarException'
+
+  schemas:
+    AtarException:
+      type: object
+      description: Generic Atar exception.<br>Exceção genérica da Atar.
+      required:
+        - name
+        - document
+        - documentType
+      properties:
+        success:
+          type: boolean
+          description: Indicates if operation was successful.<br>Indica se a operação foi bem-sucedida.
+          example: false
+        type:
+          type: string
+          description: Exception type.<br>Tipo da exceção.
+        statusCode:
+          type: integer
+          description: HTTP status code.<br>Código de status HTTP.
+        description:
+          type: string
+          description: Exception description.<br>Descrição da exceção.
+        traceId:
+          type: string
+          description: Trace ID helps the support team troubleshoot the problem.<br>Trace ID ajuda o time de suporte a solucionar o problema.
+
+    AtarId:
+      type: object
+      description: Object that represents an atarId.<br>Objeto que representa um atarId.
+      required:
+        - atarId
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+
+    CreateAccount:
+      type: object
+      description: Object that represents an issuer.<br>Objeto que representa um atarId.
+      required:
+        - atarId
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        issuer:
+          type: string
+          description: BaaS issuer identification.<br>Identificação do fornecedor do BaaS.
+          enum:
+            - topazio
+            - atar
+            - portoseguro
+        reason:
+          type: string
+          description: Reason when action on account
+          pattern: '^.{,200}$'
+        type_account:
+          type: string
+          description: Status of account lock
+          enum:
+            - PG
+            - PP
+            - CI
+            - CG
+            - CD
+            - CC
+
+    AtarIdIssuer:
+      type: object
+      description: Object that represents an issuer.<br>Objeto que representa um atarId.
+      required:
+        - atarId
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        issuer:
+          type: string
+          description: BaaS issuer identification.<br>Identificação do fornecedor do BaaS.
+          enum:
+            - topazio
+            - atar
+            - portoseguro
+        reason:
+          type: string
+          description: Reason when action on account
+          pattern: '^.{,200}$'
+
+    LockAccount:
+      type: object
+      description: Object that represents an close account request. <br> Objeto que repsenta oo corpo para fechar uma conta.
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+
+        issuer:
+          type: string
+          description: BaaS issuer identification.<br>Identificação do fornecedor do BaaS.
+          enum:
+            - topazio
+            - atar
+            - portoseguro
+
+        reason:
+          type: string
+          description: Reason when action on account
+          pattern: '^.{,200}$'
+
+        lock_status:
+          type: string
+          description: Status of account lock
+          enum:
+            - administrative
+            - juridical
+            - debit
+            - credit
+
+    Entity:
+      type: object
+      description: Simple entity that represents a person or a company.<br>Entidade simples que representa uma pessoa ou uma empresa.
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        name:
+          type: string
+          description: Entity name.<br>Nome da entidade.
+        document:
+          type: string
+          description: Entity CPF or CNPJ.<br>CPF ou CNPJ da entidade.
+        documentType:
+          type: string
+          enum:
+            - cpf
+            - cnpj
+        kycStatus:
+          type: string
+          enum:
+            - pending
+            - processing
+            - invalid
+            - valid
+            - blocked
+        birthDate:
+          type: string
+          description: Entity birthDate.
+    Profile:
+      type: object
+      description: Full entity that represents a profile.<br>Entidade completa que representa um perfil.
+      required:
+        - name
+        - document
+        - documentType
+        - email
+        - birthDate
+        - phone
+        - ppe
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        name:
+          type: string
+          description: Entity name.<br>Nome da entidade.
+          pattern: "^[A-Za-zÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]+\\s(?:[A-Za-zÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]{1,}\\s*){1,}$"
+        document:
+          type: string
+          description: Entity CPF.<br>CPF da entidade.
+          example: "18472052087"
+          pattern: '^[0-9]{11}$'
+        documentType:
+          type: string
+          enum:
+            - cpf
+        email:
+          type: string
+          description: Personal email.<br>Email pessoal.
+          pattern: '^[a-zA-Z0-9\.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9\-]+){1,}$'
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              street:
+                type: string
+                description: 'Nome da rua.'
+              streetNumber:
+                type: integer
+                description: 'Numero da rua. Ex: 350'
+              complement:
+                type: string
+                description: 'Complemento do endereco. Ex: Ed. Irmaos Heidrich, Sala 22'
+              neighborhood:
+                type: string
+                description: 'Bairro. Ex: Centro'
+              city:
+                type: string
+                description: 'Nome da cidade. Ex: Timbo'
+              state:
+                type: string
+                description: 'Sigla do estado: Ex: SC, SP, RS'
+                example: SP
+                enum:
+                  - AC
+                  - AL
+                  - AM
+                  - AP
+                  - BA
+                  - CE
+                  - DF
+                  - ES
+                  - GO
+                  - MA
+                  - MG
+                  - MS
+                  - MT
+                  - PA
+                  - PB
+                  - PE
+                  - PI
+                  - PR
+                  - RJ
+                  - RN
+                  - RO
+                  - RR
+                  - RS
+                  - SC
+                  - SE
+                  - SP
+                  - TO
+              country:
+                type: string
+                description: 'Sigla do pais: Ex: BRA, USA, ITA'
+                enum:
+                  - BRA
+              zipcode:
+                type: string
+                description: CEP (somente numeros)
+                pattern: '^[0-9]{8}$'
+        birthDate:
+          type: integer
+          description: Date of birth in Unix timestamp.<br>Data de nascimento em timestamp Unix.
+        mothersName:
+          type: string
+          description: Mother's full name.<br>Nome completo da mãe.
+          pattern: "^[A-Za-zÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]+\\s(?:[A-Za-zÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]{1,}\\s*){1,}$"
+        phone:
+          type: string
+          description: Person phone number.<br>Telefone da pessoa (DDI + DDD + NUMERO).
+          example: "5511991234567"
+          pattern: '^55[1-9]{2}([0-9]{4}|[0-9]{5})[0-9]{4}$'
+        gender:
+          type: string
+          description: Person gender.<br>Gênero da pessoa.
+          enum:
+            - M
+            - F
+        citizenship:
+          type: string
+          description: Nationality abbreviation.<br>Sigla da nacionalidade.
+          enum:
+            - BRA
+            - EST
+        ppe:
+          type: boolean
+          description: Indicates if the person is politically exposed.<br>Indica se a pessoa é politicamente exposta.
+        fiscalCountry:
+          type: string
+          description: Fiscal country.<br>País fiscal.
+          enum:
+            - BRA
+        cboId:
+          type: string
+          description: Brazilian classification of occupations.<br>Classificação brasileira de ocupações (Consulta o id no endpoint /entities/cbos).
+          example: "259"
+        rgNumber:
+          type: string
+          description: Registration number.<br>Registro geral.
+          example: "163330578"
+        monthlyIncome:
+          type: integer
+          description: Monthly income, in cents.<br>Renda mensal, em centavos.
+        patrimony:
+          type: integer
+          description: Patrimony of the person, in cents.<br>Patrimônio da pessoa, em centavos.
+        kycStatus:
+          type: string
+          description: KYC status.<br>Status de KYC.
+          enum:
+            - pending
+            - processing
+            - valid
+            - invalid
+            - blocked
+        creationDate:
+          type: integer
+          description: Creation date timestamp.<br>Timestamp da data de criação.
+        modificationDate:
+          type: integer
+          description: Modification date timestamp.<br>Timestamp da data de modificação.
+        myTags:
+          type: array
+          items:
+            type: string
+          description: Type of relationship that a person or company has with the institution.<br>Tipo de relacionamento que uma pessoa ou empresa possui com a instituição.
+
+    Person:
+      type: object
+      description: Full entity that represents a person.<br>Entidade completa que representa uma pessoa.
+      required:
+        - name
+        - document
+        - documentType
+        - email
+        - birthDate
+        - mothersName
+        - phone
+        - citizenship
+        - ppe
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        name:
+          type: string
+          description: Entity name.<br>Nome da entidade.
+          pattern: "^[A-Za-z0-9ÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]+\\s(?:[A-Za-z0-9ÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]{1,}\\s*){1,}$"
+        document:
+          type: string
+          description: Entity CPF.<br>CPF da entidade.
+          example: "18472052087"
+          pattern: '^[0-9]{11}$'
+        documentType:
+          type: string
+          enum:
+            - cpf
+        email:
+          type: string
+          description: Personal email.<br>Email pessoal.
+          pattern: '^[a-zA-Z0-9\.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9\-]+){1,}$'
+        addresses:
+          type: array
+          items:
+            type: object
+            properties:
+              street:
+                type: string
+                description: 'Nome da rua.'
+              streetNumber:
+                type: integer
+                description: 'Numero da rua. Ex: 350'
+              complement:
+                type: string
+                description: 'Complemento do endereco. Ex: Ed. Irmaos Heidrich, Sala 22'
+              neighborhood:
+                type: string
+                description: 'Bairro. Ex: Centro'
+              city:
+                type: string
+                description: 'Nome da cidade. Ex: Timbo'
+              state:
+                type: string
+                description: 'Sigla do estado: Ex: SC, SP, RS'
+                example: SP
+                enum:
+                  - AC
+                  - AL
+                  - AM
+                  - AP
+                  - BA
+                  - CE
+                  - DF
+                  - ES
+                  - GO
+                  - MA
+                  - MG
+                  - MS
+                  - MT
+                  - PA
+                  - PB
+                  - PE
+                  - PI
+                  - PR
+                  - RJ
+                  - RN
+                  - RO
+                  - RR
+                  - RS
+                  - SC
+                  - SE
+                  - SP
+                  - TO
+              country:
+                type: string
+                description: 'Sigla do pais: Ex: BRA, USA, ITA'
+                enum:
+                  - BRA
+              zipcode:
+                type: string
+                description: CEP (somente numeros)
+                pattern: '^[0-9]{8}$'
+        birthDate:
+          type: integer
+          description: Date of birth in Unix timestamp.<br>Data de nascimento em timestamp Unix.
+        mothersName:
+          type: string
+          description: Mother's full name.<br>Nome completo da mãe.
+          pattern: "^[A-Za-zÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]+\\s(?:[A-Za-zÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]{1,}\\s*){1,}$"
+        phone:
+          type: string
+          description: Person phone number.<br>Telefone da pessoa (DDI + DDD + NUMERO).
+          example: "5511991234567"
+          pattern: '^55[1-9]{2}([0-9]{4}|[0-9]{5})[0-9]{4}$'
+        gender:
+          type: string
+          description: Person gender.<br>Gênero da pessoa.
+          enum:
+            - M
+            - F
+        citizenship:
+          type: string
+          description: Nationality abbreviation.<br>Sigla da nacionalidade.
+          enum:
+            - BRA
+            - EST
+        ppe:
+          type: boolean
+          description: Indicates if the person is politically exposed.<br>Indica se a pessoa é politicamente exposta.
+        fiscalCountry:
+          type: string
+          description: Fiscal country.<br>País fiscal.
+          enum:
+            - BRA
+        cboId:
+          type: string
+          description: Brazilian classification of occupations.<br>Classificação brasileira de ocupações (Consulta o id no endpoint /entities/cbos).
+          example: "259"
+        rgNumber:
+          type: string
+          description: Registration number.<br>Registro geral.
+          example: "163330578"
+        monthlyIncome:
+          type: integer
+          description: Monthly income, in cents.<br>Renda mensal, em centavos.
+        patrimony:
+          type: integer
+          description: Patrimony of the person, in cents.<br>Patrimônio da pessoa, em centavos.
+        creationDate:
+          type: integer
+          description: Creation date timestamp.<br>Timestamp da data de criação.
+
+    Company:
+      type: object
+      description: Full entity that represents a company.<br>Entidade completa que representa uma empresa.
+      required:
+        - socialName
+        - dbaName
+        - vat
+        - classification
+        - status
+        - issueDate
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        socialName:
+          type: string
+          description: Social name.<br>Razão Social.
+          pattern: "^[A-Za-z0-9ÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]+\\s(?:[A-Za-z0-9ÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]{1,}\\s*){1,}$"
+        dbaName:
+          type: string
+          description: DBA name.<br>Nome fantasia.
+          pattern: "^[A-Za-z0-9ÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]+(\\s*)(?:[A-Za-z0-9ÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇÑáàâãäéèêëíìîïóòôõöúùûüçñ'-.]{1,}\\s*){1,}$"
+        vat:
+          type: string
+          description: Entity VAT.<br>CNPJ da entidade.
+          example: "19581142000118"
+          pattern: '^[0-9]{14}$'
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+              description: 'Nome da rua.'
+            streetNumber:
+              type: integer
+              description: 'Numero da rua. Ex: 350'
+            complement:
+              type: string
+              description: 'Complemento do endereco. Ex: Ed. Irmaos Heidrich, Sala 22'
+            neighborhood:
+              type: string
+              description: 'Bairro. Ex: Centro'
+            city:
+              type: string
+              description: 'Nome da cidade. Ex: Timbo'
+            state:
+              type: string
+              description: 'Sigla do estado: Ex: SC, SP, RS'
+              example: SP
+              enum:
+                - AC
+                - AL
+                - AM
+                - AP
+                - BA
+                - CE
+                - DF
+                - ES
+                - GO
+                - MA
+                - MG
+                - MS
+                - MT
+                - PA
+                - PB
+                - PE
+                - PI
+                - PR
+                - RJ
+                - RN
+                - RO
+                - RR
+                - RS
+                - SC
+                - SE
+                - SP
+                - TO
+            country:
+              type: string
+              description: 'Sigla do pais: Ex: BRA, USA, ITA'
+              enum:
+                - BRA
+            zipcode:
+              type: string
+              description: CEP (somente numeros)
+              pattern: '^[0-9]{8}$'
+        classification:
+          type: string
+          description: Company classification.<br>Classificação da empresa.
+          enum:
+            - EIRELI
+            - EPP
+            - ISENTO
+            - LTDA
+            - LUCRO_PRESUMIDO
+            - LUCRO_REAL
+            - ME
+            - MEI
+            - NAO_ATIVA
+            - SA
+            - SIMPLES
+            - ADMINISTRACAO_PUBLICA
+        nire:
+          type: string
+          description: Company's NIRE.<br>NIRE da empresa.
+          pattern: '^[0-9]{11}$'
+        status:
+          type: string
+          description: Company's Receita Federal status.<br>Status da empresa na Receita Federal.
+          enum:
+            - active
+            - unfit
+            - closed
+            - suspended
+            - nulled
+        isPartnersSignTogether:
+          type: boolean
+          description: Flag that indicates if partners sign together.<br>Flag que indica se sócios assinam em conjunto.
+        socialCapital:
+          type: integer
+          description: Company's social capital, in cents.<br>Capital social da empresa.
+        income:
+          type: integer
+          description: Company's annual income.<br>Faturamento anual da empresa.
+        mainActivityCode:
+          type: string
+          description: Company's main activity CNAE code.<br>CNAE principal da empresa (Consulta o id no endpoint /entities/cnaes).
+        relationships:
+          type: array
+          items:
+            type: object
+            description: Entity that represents the relationship between an company and a Entity.<br>Entidade que representa o relacionamento entre uma empresa e uma Entity.
+            properties:
+              atarId:
+                type: integer
+                description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+              name:
+                type: string
+                description: Entity name.<br>Nome da entidade.
+              document:
+                type: string
+                description: Entity CPF or CNPJ.<br>CPF ou CNPJ da entidade.
+              documentType:
+                type: string
+                enum:
+                  - cpf
+                  - cnpj
+              kycStatus:
+                type: string
+                description: KYC status.<br>Status de KYC.
+                enum:
+                  - pending
+                  - processing
+                  - valid
+                  - invalid
+                  - blocked
+              role:
+                type: string
+                description: Partner role.<br>Função do sócio.
+                  - ADM
+                  - DIR
+                  - GER
+                  - PRC
+                  - NI
+              equityInterest:
+                type: integer
+                description: Partner equity interest (total between partners must be 100).<br>Porcentagem do sócio (total entre sócios deve ser 100).
+                minimum: 1
+                maximum: 100
+              legalRepresentative:
+                type: boolean
+                description: Is partner legal representative.<br>Sócio é representante legal.
+              canSignAlone:
+                type: boolean
+                description: Partner can sign alone.<br>Sócio pode assinar sozinho.
+              startDate:
+                type: integer
+                description: Partner company's relationship start date.<br>Data de início do relacionamento do sócio com a empresa.
+              birthDate:
+                type: integer
+                description: Partner birth date.<br>Data de nascimento do sócio.
+              email:
+                type: string
+                description: Partner email.<br>Email do sócio.
+                pattern: '^[a-zA-Z0-9\.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9\-]+){1,}$'
+              phone:
+                type: string
+                description: Partner phone number.<br>Telefone do sócio (DDI + DDD + NUMERO).
+                example: "5511991234567"
+                pattern: '^55[1-9]{2}([0-9]{4}|[0-9]{5})[0-9]{4}$'
+        contacts:
+          type: array
+          items:
+            type: object
+            description: Entity that represents the company contact.<br>Entidade que representa um contato da empresa.
+            properties:
+              name:
+                type: string
+                description: Contact name.<br>Nome do contato.
+              role:
+                type: string
+                description: Contact role.<br>Função do contato.
+              email:
+                type: string
+                description: Contact email.<br>Email do contato.
+                pattern: '^[a-zA-Z0-9\.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9\-]+){1,}$'
+              phone:
+                type: string
+                description: Contact phone number.<br>Telefone do contato (DDI + DDD + NUMERO).
+                example: "5511991234567"
+                pattern: '^55[1-9]{2}([0-9]{4}|[0-9]{5})[0-9]{4}$'
+        issueDate:
+          type: integer
+          description: Company's ssue date timestamp.<br>Timestamp da data de concepção da empresa.
+        creationDate:
+          type: integer
+          description: Creation date timestamp.<br>Timestamp da data de criação.
+        modificationDate:
+          type: integer
+          description: Modification date timestamp.<br>Timestamp da data de modificação.
+        myTags:
+          type: array
+          items:
+            type: string
+          description: Type of relationship that a person or company has with the institution.<br>Tipo de relacionamento que uma pessoa ou empresa possui com a instituição.
+        phone:
+          type: string
+          description: phone number.<br>Telefone do contato (DDI + DDD + NUMERO).
+          example: "5511991234567"
+          pattern: '^55[1-9]{2}([0-9]{4}|[0-9]{5})[0-9]{4}$'
+        email:
+          type: string
+          description: email.<br>Email do contato (DDI + DDD + NUMERO).
+          pattern: '^[a-zA-Z0-9\.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9\-]+){1,}$'
+        ie:
+          type: string
+          description: ie .<br> f estadual.
+        im:
+          type: string
+          description: im .<br> inscrição municipal.
+        fiscalCountry:
+          type: string
+          description: fiscalCountry .<br> Sigla do pais Ex BRA.
+
+    RelationshipPartner:
+      type: object
+      description: Entity that represents the relationship between an company and a Entity.<br>Entidade que representa o relacionamento entre uma empresa e uma Entity.
+      properties:
+        atarId:
+          type: integer
+          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
+        name:
+          type: string
+          description: Entity name.<br>Nome da entidade.
+        document:
+          type: string
+          description: Entity CPF or CNPJ.<br>CPF ou CNPJ da entidade.
+        documentType:
+          type: string
+          enum:
+            - cpf
+            - cnpj
+        kycStatus:
+          type: string
+          description: KYC status.<br>Status de KYC.
+          enum:
+            - pending
+            - processing
+            - valid
+            - invalid
+            - blocked
+        role:
+          type: string
+          description: Partner role.<br>Função do sócio.
+            - ADM
+            - DIR
+            - GER
+            - PRC
+            - NI
+        equityInterest:
+          type: integer
+          description: Partner equity interest (total between partners must be 100).<br>Porcentagem do sócio (total entre sócios deve ser 100).
+          minimum: 1
+          maximum: 100
+        legalRepresentative:
+          type: boolean
+          description: Is partner legal representative.<br>Sócio é representante legal.
+        canSignAlone:
+          type: boolean
+          description: Partner can sign alone.<br>Sócio pode assinar sozinho.
+        startDate:
+          type: integer
+          description: Partner company's relationship start date.<br>Data de início do relacionamento do sócio com a empresa.
+        birthDate:
+          type: integer
+          description: Partner birth date.<br>Data de nascimento do sócio.
+        email:
+          type: string
+          description: Partner email.<br>Email do sócio.
+          pattern: '^[a-zA-Z0-9\.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9\-]+){1,}$'
+        phone:
+          type: string
+          description: Partner phone number.<br>Telefone do sócio (DDI + DDD + NUMERO).
+          example: "5511991234567"
+          pattern: '^55[1-9]{2}([0-9]{4}|[0-9]{5})[0-9]{4}$'
+
+    Cbo:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Official code.<br>Código oficial.
+        id:
+          type: string
+          description: CBO unique ID.<br>ID único do CBO.
+        name:
+          type: string
+          description: Occupation name.<br>Nome da ocupação.
+    Account:
+      type: object
+      properties:
+        balance:
+          type: integer
+          description: Account balance, in cents.<br>Saldo da conta, em centavos.
+        balanceBlocked:
+          type: integer
+          description: Account balance blocked, in cents.<br>Saldo bloqueado da conta, em centavos.
+        status:
+          type: string
+          description: Account status.<br>Status da conta.
+          enum:
+            - open
+            - closed
+            - locked
+            - administrative-locked
+            - juridical-locked
+            - debit-locked
+            - credit-locked
+
+        institutionCode:
+          type: string
+          description: Bank COMPE code.<br>Código COMPE do banco.
+        institutionName:
+          type: string
+          description: Bank name.<br>Nome do banco.
+        branchNumber:
+          type: string
+          description: Branch number.<br>Número da agência.
+        accountNumber:
+          type: string
+          description: Bank account number.<br>Número da conta bancária.
+        entity:
+          $ref: '#/components/schemas/Entity'
+        reason:
+          type: string
+          description: Reason when action on account
+          pattern: '^.{,200}$'
+    KycAnalysis:
+      type: object
+      properties:
+        atarId:
+          type: integer
+          # description:
+        kycStatus:
+          type: string
+          enum:
+            - pending
+            - processing
+            - invalid
+            - valid
+            - blocked
+        invalidReason:
+          type: string
+
+    SubscribeRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          description: URL Format. <br> Formato de URL.
+        secret:
+          type: string
+          description: Secret
+
+    EntityFile:
+      type: object
+      properties:
+        base64:
+          type: string
+          description: Base 64 representation of the file. <br>Representação em Base 64 do arquivo.
+        fileId:
+          type: string
+          description: File unique ID.<br>ID único do arquivo.
+        type:
+          type: string
+          description: File type.<br>Tipo do arquivo.
+          enum:
+            - front
+            - back
+            - selfie
+            - socialContract
+
+    EntityPreFile:
+      type: object
+      required:
+        - base64
+      properties:
+        base64:
+          type: string
+          description: Base 64 representation of the file. <br>Representação em Base 64 do arquivo.
+    EntityFileResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: File unique ID.<br>ID único do arquivo.
+
+    CodeInsert:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          description: API key do cliente a executar a acao
+        email:
+          type: string
+          description: E-mail a ser validado
+        phone:
+          type: string
+          description: Telefone do usuario (DDI + DDI + NUMERO)
+        mode:
+          type: string
+          description: email ou sms
+        OSType:
+          type: integer
+          description: Sistema operacional do dispositivo (1 = iOS, 2 = Android, 3
+            = Web)
+          format: int32
+        type:
+          type: string
+          description: tipo da OTP
+          enum:
+            - signup
+            - pix
