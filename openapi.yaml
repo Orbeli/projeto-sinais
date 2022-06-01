@@ -1925,6 +1925,16 @@ components:
             - juridical-locked
             - debit-locked
             - credit-locked
+        type_account:
+          type: string
+          description: Type account.<br>Tipo da conta.
+          enum:
+            - CC
+            - CD
+            - CG
+            - CI
+            - PG
+            - PP
 
         institutionCode:
           type: string
