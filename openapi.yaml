@@ -775,7 +775,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateAccount"
+              $ref: "#/components/schemas/AtarIdIssuer"
       responses:
         "204":
           description: OK
@@ -1171,37 +1171,6 @@ components:
           type: integer
           description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
 
-    CreateAccount:
-      type: object
-      description: Object that represents an issuer.<br>Objeto que representa um atarId.
-      required:
-        - atarId
-      properties:
-        atarId:
-          type: integer
-          description: Unique identification to a person or a company known by Atar.<br>Identificação única de uma pessoa ou empresa conhecida pela Atar.
-        issuer:
-          type: string
-          description: BaaS issuer identification.<br>Identificação do fornecedor do BaaS.
-          enum:
-            - topazio
-            - atar
-            - portoseguro
-        reason:
-          type: string
-          description: Reason when action on account
-          pattern: '^.{,200}$'
-        type_account:
-          type: string
-          description: Status of account lock
-          enum:
-            - PG
-            - PP
-            - CI
-            - CG
-            - CD
-            - CC
-
     AtarIdIssuer:
       type: object
       description: Object that represents an issuer.<br>Objeto que representa um atarId.
@@ -1218,6 +1187,16 @@ components:
             - topazio
             - atar
             - portoseguro
+        type_account:
+          type: string
+          description: Person account type.<br>Tipo da conta do usuário.
+          enum:
+            - checkingAccount
+            - depositAccount
+            - guaranteeAccount
+            - investmentAccount
+            - paymentAccount
+            - savingsAccount
         reason:
           type: string
           description: Reason when action on account
@@ -1929,12 +1908,12 @@ components:
           type: string
           description: Type account.<br>Tipo da conta.
           enum:
-            - CC
-            - CD
-            - CG
-            - CI
-            - PG
-            - PP
+            - checkingAccount
+            - depositAccount
+            - guaranteeAccount
+            - investmentAccount
+            - paymentAccount
+            - savingsAccount
 
         institutionCode:
           type: string
