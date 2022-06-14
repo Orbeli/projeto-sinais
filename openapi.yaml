@@ -803,15 +803,29 @@ paths:
         - basicAuth: []
       tags:
         - /accounts
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          description: Número máximo de registros de contas que serão retornados.
+          schema:
+            type: integer
+            default: 100
+        - name: nextPageCursor
+          in: query
+          description: Ponteiro para os próximos registros de contas.
+          required: false
+          schema:
+            type: string
+
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Account"
+                type: object
+                $ref: "#/components/schemas/AccountsResponse"
         "401":
           $ref: '#/components/responses/Unauthorized'
         "403":
@@ -1194,7 +1208,7 @@ components:
             - checkingAccount
             - depositAccount
             - guaranteeAccount
-            - investmentAccount
+            - investmentsAccount
             - paymentAccount
             - savingsAccount
         reason:
@@ -1354,6 +1368,16 @@ components:
                 type: string
                 description: CEP (somente numeros)
                 pattern: '^[0-9]{8}$'
+              addressType:
+                type: string
+                description: 'Tipo de endereço. Ex: entrega, comercial, residencial, cobrança ou outros'
+                default: residential
+                enum:
+                  - delivery
+                  - commercial
+                  - residential
+                  - billing
+                  - other
         birthDate:
           type: integer
           description: Date of birth in Unix timestamp.<br>Data de nascimento em timestamp Unix.
@@ -1516,6 +1540,16 @@ components:
                 type: string
                 description: CEP (somente numeros)
                 pattern: '^[0-9]{8}$'
+              addressType:
+                type: string
+                description: 'Tipo de endereço. Ex: entrega, comercial, residencial, cobrança ou outros'
+                default: residential
+                enum:
+                  - delivery
+                  - commercial
+                  - residential
+                  - billing
+                  - other
         birthDate:
           type: integer
           description: Date of birth in Unix timestamp.<br>Data de nascimento em timestamp Unix.
@@ -1652,6 +1686,16 @@ components:
               type: string
               description: CEP (somente numeros)
               pattern: '^[0-9]{8}$'
+            addressType:
+                type: string
+                description: 'Tipo de endereço. Ex: entrega, comercial, residencial, cobrança ou outros'
+                default: residential
+                enum:
+                  - delivery
+                  - commercial
+                  - residential
+                  - billing
+                  - other
         classification:
           type: string
           description: Company classification.<br>Classificação da empresa.
@@ -2019,3 +2063,18 @@ components:
           enum:
             - signup
             - pix
+    AccountsResponse:
+      type: object
+      properties:
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/Account"
+          description: Lista de contas
+        nextPageCursor:
+          type: string
+          description: Ponteiro para os próximos registros de contas.
+        totalAccounts:
+          type: integer
+          description: Número total de contas cadastradas com os filtros passados.
+       
