@@ -1955,7 +1955,7 @@ components:
             - checkingAccount
             - depositAccount
             - guaranteeAccount
-            - investmentAccount
+            - investmentsAccount
             - paymentAccount
             - savingsAccount
 
